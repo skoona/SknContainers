@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  cppdev:
+    container_name: CPP-Development
+    environment:
+      - RACK_ENV=production
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-cppdev-image:1.0
+    ports:
+      - target: 22
+        published: 445
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 8900
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8075
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+volumes:
+  cDevelopment:
+    external: true
+    
