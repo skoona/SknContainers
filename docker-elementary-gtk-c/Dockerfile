@@ -1,13 +1,13 @@
 FROM elementary/docker:stable
 LABEL net.skoona.gtk4="GTK4/C Development Container"
-LABEL version="4.0.0"
+LABEL version="4.0.1"
 LABEL target-editor="vsCode"
 LABEL description="GTK4.0 Development Image based on Elementary/OS and full loaded for C development."
 LABEL net.skoona.image.authors="James Scott (skoona@gmail.com)"
 
 WORKDIR .
 
-RUN apt-get update -y && yes | unminimize  
+RUN apt-get update -y
 
 RUN apt-get install -y apt-utils tzdata dbus vim curl wget lv htop openssh-server gnome-builder gtk-4-examples gtk-doc-tools \ 
         man-db sudo tree git sed locales x11-apps gedit whois && \
