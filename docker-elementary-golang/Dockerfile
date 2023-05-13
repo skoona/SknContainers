@@ -1,5 +1,5 @@
 FROM golang:bullseye
-LABEL net.skoona.gtk4="Golang Development Container"
+LABEL net.skoona.golang="Golang Development Container"
 LABEL version="1.0.0"
 LABEL target-editor="vsCode"
 LABEL description="GOlang Development Image based on Elementary/OS and full loaded for C development."

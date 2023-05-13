@@ -1,8 +1,8 @@
-FROM elementary/docker:stable
-LABEL net.skoona.cpp="C++ Development Container"
-LABEL version="2.0.0"
+FROM ruby:3.2.2-bullseye
+LABEL net.skoona.ruby="Ruby 3.2.2 Development Container"
+LABEL version="1.0.0"
 LABEL target-editor="vsCode"
-LABEL description="C++ Development Image based on Elementary/OS and full loaded for C development."
+LABEL description="Ruby Development Image based on Elementary/OS and full loaded for C development."
 LABEL net.skoona.image.authors="James Scott (skoona@gmail.com)"
 
 WORKDIR .
@@ -36,6 +36,7 @@ VOLUME /Projects
 EXPOSE 22
 EXPOSE 5900
 EXPOSE 80
+EXPOSE 3000
 
 ENTRYPOINT service ssh restart && bash
 
