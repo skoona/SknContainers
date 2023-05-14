@@ -1,0 +1,149 @@
+---
+version: '3.9'
+services:
+  cppdev:
+    container_name: CPP-Development
+    environment:
+      - RACK_ENV=development
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-development-cpp-image:3.0.0
+    ports:
+      - target: 22
+        published: 435
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5910
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8010
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+  gtk4dev:
+    container_name: Gtk4-Development
+    environment:
+      - RACK_ENV=development
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-development-gtk-image:3.0.0
+    ports:
+      - target: 22
+        published: 445
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5920
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8020
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+  godev:
+    container_name: Golang-Development
+    environment:
+      - RACK_ENV=development
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-development-golang-image:3.0.0
+    ports:
+      - target: 22
+        published: 455
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5930
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8030
+        protocol: tcp
+        mode: bridge
+      - target: 3000
+        published: 3030
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+  rubydev:
+    container_name: Ruby-Development
+    environment:
+      - RACK_ENV=development
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-development-ruby-image:3.0.0
+    ports:
+      - target: 22
+        published: 465
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5940
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8040
+        protocol: tcp
+        mode: bridge
+      - target: 3000
+        published: 3040
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+ 
+  espdev:
+    container_name: ESP-Development
+    environment:
+      - RACK_ENV=development
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-development-espressif-image:3.0.0
+    ports:
+      - target: 22
+        published: 475
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5950
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8050
+        protocol: tcp
+        mode: bridge
+      - target: 3000
+        published: 3050
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+volumes:
+  cDevelopment:
+    external: true
+    
