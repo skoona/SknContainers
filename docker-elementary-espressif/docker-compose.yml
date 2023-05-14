@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  espdev:
+    container_name: ESP-Development
+    environment:
+      - RACK_ENV=development
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-espressif-image:1.0.0
+    ports:
+      - target: 22
+        published: 475
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 10100
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8096
+        protocol: tcp
+        mode: bridge
+      - target: 3000
+        published: 3005
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+volumes:
+  cDevelopment:
+    external: true
+    
