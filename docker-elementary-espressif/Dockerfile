@@ -1,6 +1,6 @@
-ARG SC_JSCOTT
-ARG SC_SKOONA
-ARG SC_DEVELOPER
+ARG SC_JSCOTT="$6$XE.jgME1JOPg0jfU$V3hDrzeuJvuG3/54wvmwppE8l/CBMOiwo98CdALyKiv7nfbFetvh.hoS0Q06QwRdSkwfS1N0nDFryZppg.ZkT1"
+ARG SC_SKOONA="$6$XE.jgME1JOPg0jfU$V3hDrzeuJvuG3/54wvmwppE8l/CBMOiwo98CdALyKiv7nfbFetvh.hoS0Q06QwRdSkwfS1N0nDFryZppg.ZkT1"
+ARG SC_DEVELOPER="$6$XE.jgME1JOPg0jfU$V3hDrzeuJvuG3/54wvmwppE8l/CBMOiwo98CdALyKiv7nfbFetvh.hoS0Q06QwRdSkwfS1N0nDFryZppg.ZkT1"
 
 FROM espressif/idf:release-v5.1
 LABEL net.skoona.esp="Espressif Development Container"
@@ -23,9 +23,9 @@ RUN apt-get update -y && \
 		ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
 RUN groupadd -g 1000 jscott && \
-	useradd -c "James Scott III" -u 1000 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_JSCOTT} -m -s /bin/bash jscott && \
-	useradd -c "James Scott Jr"  -u 1001 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_SKOONA} -m -s /bin/bash skoona  && \
-	useradd -c "Developer"       -u 1002 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_DEVELOPER} -m -s /bin/bash developer && \
+	useradd -c "James Scott III" -u 1000 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p $SC_JSCOTT -m -s /bin/bash jscott && \
+	useradd -c "James Scott Jr"  -u 1001 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p $SC_SKOONA -m -s /bin/bash skoona  && \
+	useradd -c "Developer"       -u 1002 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p $SC_DEVELOPER -m -s /bin/bash developer && \
 	mkdir -p /etc/sudoers.d/  && \
 	echo "jscott ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/jscott && \
 	echo "skoona ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/skoona && \
