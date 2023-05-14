@@ -1,8 +1,9 @@
-ARG SC_JSCOTT="$6$XE.jgME1JOPg0jfU$V3hDrzeuJvuG3/54wvmwppE8l/CBMOiwo98CdALyKiv7nfbFetvh.hoS0Q06QwRdSkwfS1N0nDFryZppg.ZkT1"
-ARG SC_SKOONA="$6$XE.jgME1JOPg0jfU$V3hDrzeuJvuG3/54wvmwppE8l/CBMOiwo98CdALyKiv7nfbFetvh.hoS0Q06QwRdSkwfS1N0nDFryZppg.ZkT1"
-ARG SC_DEVELOPER="$6$XE.jgME1JOPg0jfU$V3hDrzeuJvuG3/54wvmwppE8l/CBMOiwo98CdALyKiv7nfbFetvh.hoS0Q06QwRdSkwfS1N0nDFryZppg.ZkT1"
-
 FROM golang:bullseye
+
+ARG SC_JSCOTT='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
+ARG SC_SKOONA='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
+ARG SC_DEVELOPER='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
+
 LABEL net.skoona.golang="Golang Development Container"
 LABEL version="3.0.0"
 LABEL target-editor="vsCode"
@@ -22,9 +23,9 @@ RUN apt-get update -y && apt-get install -y apt-utils tzdata dbus vim curl wget 
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
 RUN groupadd -g 1000 jscott && \
-	useradd -c "James Scott III" -u 1000 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p $SC_JSCOTT -m -s /bin/bash jscott && \
-	useradd -c "James Scott Jr"  -u 1001 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p $SC_SKOONA -m -s /bin/bash skoona  && \
-	useradd -c "Developer"       -u 1002 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p $SC_DEVELOPER -m -s /bin/bash developer && \
+	useradd -c "James Scott III" -u 1000 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_JSCOTT} -m -s /bin/bash jscott && \
+	useradd -c "James Scott Jr"  -u 1001 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_SKOONA} -m -s /bin/bash skoona  && \
+	useradd -c "Developer"       -u 1002 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_DEVELOPER} -m -s /bin/bash developer && \
 	mkdir -p /etc/sudoers.d/  && \
 	echo "jscott ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/jscott && \
 	echo "skoona ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/skoona && \
@@ -38,7 +39,8 @@ RUN groupadd -g 1000 jscott && \
 COPY ./issue.net /etc/issue.net
 COPY ./authorized_keys /home/jscott/.ssh/authorized_keys
 COPY ./.bashrc /home/jscott/.bashrc
-RUN chown -R jscott:jscott /home/jscott
+RUN chown -R jscott:jscott /home/jscott/.bashrc  && chmod 644 /home/jscott/.ssh/authorized_keys && \
+	chown -R jscott:jscott /home/jscott/.ssh/authorized_keys && chmod 600 /home/jscott/.ssh/authorized_keys
 
 VOLUME /Projects
 
