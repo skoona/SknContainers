@@ -35,8 +35,8 @@ $ popd
 ```
 
 See bash scripts 
-- dBuild <index> <tag>
+- dBuild \<index\> \<tag\>        build a single image
 - - $ ./dBuild 0 1.0.0
 or
-- dMake <tage>
+- dMake \<tag\>                   build all images
 - - create all the dockers, and outputs `docker-compose.yml`
