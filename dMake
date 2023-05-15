@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# file: dMake <version>
+#
+# Build Development Stack
+#
+# $ echo "username:encryptedPassWd" | chpasswd -e
+# -- or --
+# $ useradd -p 'encryptedPassWd'  username
+#
+
+TAG="${1:-3.1.0}"
+
+IMAGES=( net-skoona-development-gtk-image:$TAG \
+    net-skoona-development-cpp-image:$TAG \
+    net-skoona-development-golang-image:$TAG \
+    net-skoona-development-espressif-image:$TAG \
+    net-skoona-development-ruby-image:$TAG )
+
+WORKDIRS=( docker-elementary-gtk \
+    docker-elementary-cpp \
+    docker-elementary-golang \
+    docker-elementary-espressif \
+    docker-elementary-ruby )
+
+# set mkpasswd 
+if [ -s ./.export-user-secrets ]
+    then source ./.export-user-secrets
+    else source ./.user-secrets
+fi
+
+for i in {0..4} ; do
+    pushd "$HOME/Projects/${WORKDIRS[$i]}"
+    docker build -q --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER -t ${IMAGES[$i]} .
+    popd
+done
+
+sed "s/LATEST/$TAG/g" ./stack-docker-compose.yml > docker-compose.yml
+
+echo "Done..."

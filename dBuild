@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# file: dBuild <index> <tag>
+# - Build One Development image
+# - <index>: 0 to 4, based on IMAGES
+# - <tag>: dockerr-image:<tag>
+#
+
+INDEX="${1:-0}"
+TAG="${2:-3.1.0}"
+
+IMAGES=( net-skoona-development-gtk-image:$TAG \
+    net-skoona-development-cpp-image:$TAG \
+    net-skoona-development-golang-image:$TAG \
+    net-skoona-development-espressif-image:$TAG \
+    net-skoona-development-ruby-image:$TAG )
+
+WORKDIRS=( docker-elementary-gtk \
+    docker-elementary-cpp \
+    docker-elementary-golang \
+    docker-elementary-espressif \
+    docker-elementary-ruby )
+
+# set mkpasswd 
+if [ -s ./.export-user-secrets ]
+    then source ./.export-user-secrets
+    else source ./.user-secrets
+fi
+
+pushd "$HOME/Projects/${WORKDIRS[$INDEX]}"
+docker build --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER -t ${IMAGES[$INDEX]} .
+popd
+
+echo "Done..."
