@@ -1,13 +1,13 @@
 # SknContainers
-Implementation files for Docker development containers: Ruby, GoLang, GTK4, C++, Espressif, Arduino, and JavaScript
+Implementation files for Docker development containers: Ruby, GoLang, GTK4, C++, Espressif, and Arduino.
 
 ### Intent
-- Create a full featured docker container that can be used for specific development activities, without the concerns of other langage environments.
-- vsCode's SSH Remote extension is the initial IDE intended. However, eClipse, Builder, and any X11 based tooling is enabled in each container.
+- Create a full featured docker container that can be used for specific development activities, without the concerns of other language environments.
+- vsCode's SSH Remote extension is the initial IDE intended. However, eClipse, IntelliJ, Builder, or any X11 based tooling is enabled in each container.
 - Portainer is my Docker manager and the docker-compose.yml files are assumed to be used to create Stacks; while the Dockerfiles are implemented from the command-line.
 
 ### Usage
-- Create a local file `.user-secrets` with the password hash of the three users in each Dockerfile
+- Create or edit the local file `.user-secrets` with the password hash of the three users in each Dockerfile
 - Three users are defined in the Dockerfile which you should change as needed; the default user password is `docker`.
 
 ```bash
