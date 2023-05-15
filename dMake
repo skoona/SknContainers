@@ -15,13 +15,16 @@ IMAGES=( net-skoona-development-gtk-image:$TAG \
     net-skoona-development-cpp-image:$TAG \
     net-skoona-development-golang-image:$TAG \
     net-skoona-development-espressif-image:$TAG \
-    net-skoona-development-ruby-image:$TAG )
+    net-skoona-development-ruby-image:$TAG \
+    net-skoona-development-arduino-image:$TAG )
+
 
 WORKDIRS=( docker-elementary-gtk \
     docker-elementary-cpp \
     docker-elementary-golang \
     docker-elementary-espressif \
-    docker-elementary-ruby )
+    docker-elementary-ruby \
+    docker-elementary-arduino )
 
 # set mkpasswd 
 if [ -s ./.export-user-secrets ]
@@ -29,7 +32,7 @@ if [ -s ./.export-user-secrets ]
     else source ./.user-secrets
 fi
 
-for i in {0..4} ; do
+for i in {0..5} ; do
     pushd "$HOME/Projects/${WORKDIRS[$i]}"
     docker build -q --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER -t ${IMAGES[$i]} .
     popd

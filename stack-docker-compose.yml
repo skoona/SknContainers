@@ -4,7 +4,6 @@ services:
   cppdev:
     container_name: CPP-Development
     environment:
-      - RACK_ENV=development
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-cpp-image:LATEST
     ports:
@@ -30,7 +29,6 @@ services:
   gtk4dev:
     container_name: Gtk4-Development
     environment:
-      - RACK_ENV=development
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-gtk-image:LATEST
     ports:
@@ -56,7 +54,6 @@ services:
   godev:
     container_name: Golang-Development
     environment:
-      - RACK_ENV=development
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-golang-image:LATEST
     ports:
@@ -116,7 +113,6 @@ services:
   espdev:
     container_name: ESP-Development
     environment:
-      - RACK_ENV=development
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-espressif-image:LATEST
     ports:
@@ -134,6 +130,31 @@ services:
         mode: bridge
       - target: 3000
         published: 3050
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+  arduino:
+    container_name: Arduino-Development
+    environment:
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-development-arduino-image:LATEST
+    ports:
+      - target: 22
+        published: 485
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 9900
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8085
         protocol: tcp
         mode: bridge
     restart: always

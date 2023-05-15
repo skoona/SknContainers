@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  arduino:
+    container_name: Arduino-Development
+    environment:
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-development-arduino-image:3.1.0
+    ports:
+      - target: 22
+        published: 485
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 9900
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8085
+        protocol: tcp
+        mode: bridge
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+volumes:
+  cDevelopment:
+    external: true
+    
