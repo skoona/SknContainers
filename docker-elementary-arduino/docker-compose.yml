@@ -4,20 +4,10 @@ services:
     container_name: Arduino-Development
     environment:
       - DISPLAY=10.100.1.5:0.1
-    image: net-skoona-development-arduino-image:3.1.0
-    ports:
-      - target: 22
-        published: 485
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 9900
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8085
-        protocol: tcp
-        mode: bridge
+    image: net-skoona-development-arduino-image:1.0.0
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.2
     restart: always
     tty: true
     volumes:
@@ -28,4 +18,15 @@ services:
 volumes:
   cDevelopment:
     external: true
-    
+   
+networks:
+  vlan20:
+    name: iot-dev-network
+    driver: macvlan
+    driver_opts:
+      parent: ens18.20
+    ipam:
+      config:
+        - subnet: "10.100.20.0/24"
+          gateway: "10.100.20.1"
+

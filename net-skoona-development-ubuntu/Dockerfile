@@ -19,8 +19,8 @@ ENV LC_ALL=en_US.UTF-8
 
 RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
-	openssh-server man-db sudo tree git sed locales whois \
-	net-tools x11-apps gedit x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev && \
+	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
+	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
@@ -45,12 +45,15 @@ RUN groupadd -g 1000 jscott && \
 
 COPY issue.net /etc/issue.net
 COPY .ssh    /home/jscott/.ssh
+COPY .ssh    /home/developer/.ssh
 COPY .bashrc /home/jscott/.bashrc
 COPY .bashrc /home/skoona/.bashrc
 COPY .bashrc /home/developer/.bashrc
 
 RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
-	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc
+	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc && \
+	chown -R jscott:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
+	chown jscott:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc 
 
 RUN sed -i '3 a echo "\
 export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
