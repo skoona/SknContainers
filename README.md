@@ -35,15 +35,20 @@ $ popd
 ```
 
 See bash scripts 
-- build a single image: dBuild \<index\> \<tag\>        
+- build any single image: sBuild \<directory\> \<tag\>        
+- - $ ./sBuild net-skoona-gnome 1.0.1
+- or
+- build a single image in collection: dBuild \<index\> \<tag\>        
 - - $ ./dBuild 0 1.0.0
 - or
-- build all images: dMake \<tag\>     
+- build all images in collection: dMake \<tag\>     
 - - $ ./dMake 1.0.0              
 - - create all the dockers, and outputs `docker-compose.yml`
 
 
+#### Create a macvlan for container networking
 
-```
+```bash
+$ docker network create -d macvlan --subnet=10.100.20.0/24 --gateway=10.100.20.1 -o parent=ens18.20 iot-dev-network
 
 ```
