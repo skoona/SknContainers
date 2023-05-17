@@ -4,9 +4,6 @@
 #
 # Build Development Stack
 #
-# $ echo "username:encryptedPassWd" | chpasswd -e
-# -- or --
-# $ useradd -p 'encryptedPassWd'  username
 #
 
 TAG="${1:-3.1.0}"
@@ -27,15 +24,18 @@ WORKDIRS=( docker-elementary-gtk \
     docker-elementary-arduino )
 
 # set mkpasswd 
-if [ -s ./.export-user-secrets ]
-    then source ./.export-user-secrets
-    else source ./.user-secrets
-fi
+ [[ -s ./.export-user-secrets ]] && {
+     source ./.export-user-secrets
+ } || { 
+    source ./.user-secrets
+ } 
 
 for i in {0..5} ; do
     pushd "./${WORKDIRS[$i]}"
-    cp ../authorized_keys .
-    cp ../.bashrc .
+    [[ -d .ssh ]] || {
+        cp -a ../.ssh . 
+        cp ../.bashrc .
+    }
     docker build -q --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER -t ${IMAGES[$i]} .
     popd
 done

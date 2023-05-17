@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  cppdev:
+    container_name: Gnome-Explorer
+    environment:
+      - DISPLAY=10.100.1.5:0.1
+    image: net-skoona-gnome-image:1.0
+    networks:
+      network:
+        ipv4_address: 10.100.20.9
+    restart: always
+    tty: true
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+
+volumes:
+  cDevelopment:
+    external: true
+
+networks:
+  network:
+    net: vlan20
+    driver: macvlan
+    external: true
+
+

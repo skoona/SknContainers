@@ -3,11 +3,11 @@
 # file: dBuild <index> <tag>
 # - Build One Development image
 # - <index>: 0 to 5, based on IMAGES
-# - <tag>: dockerr-image:<tag>
+# - <tag>: docker-image:<tag>
 #
 
-INDEX="${1:-0}"
-TAG="${2:-3.1.0}"
+INDEX=${1:-0}
+TAG=${2:-3.1.0}
 
 IMAGES=( net-skoona-development-gtk-image:$TAG \
     net-skoona-development-cpp-image:$TAG \
@@ -24,14 +24,17 @@ WORKDIRS=( docker-elementary-gtk \
     docker-elementary-arduino )
 
 # set mkpasswd 
-if [ -s ./.export-user-secrets ]
-    then source ./.export-user-secrets
-    else source ./.user-secrets
-fi
+ [[ -s ./.export-user-secrets ]] && {
+     source ./.export-user-secrets
+ } || { 
+    source ./.user-secrets
+ } 
 
 pushd "./${WORKDIRS[$INDEX]}"
-  cp ../authorized_keys .
-  cp ../.bashrc .
+   [[ -d .ssh ]] || {
+      cp -a ../.ssh . 
+      cp ../.bashrc .
+   }
   docker build --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER -t ${IMAGES[$INDEX]} .
 popd
 
