@@ -41,6 +41,8 @@ RUN groupadd -g 1000 jscott && \
 COPY issue.net /etc/issue.net
 COPY .ssh    /home/jscott/.ssh
 COPY .bashrc /home/jscott/.bashrc
+COPY .bashrc /home/skoona/.bashrc
+COPY .bashrc /home/developer/.bashrc
 
 RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc
