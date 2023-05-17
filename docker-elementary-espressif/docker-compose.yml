@@ -3,26 +3,11 @@ services:
   espdev:
     container_name: ESP-Development
     environment:
-      - RACK_ENV=development
       - DISPLAY=10.100.1.5:0.1
-    image: net-skoona-espressif-image:1.0.0
-    ports:
-      - target: 22
-        published: 475
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 10100
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8096
-        protocol: tcp
-        mode: bridge
-      - target: 3000
-        published: 3005
-        protocol: tcp
-        mode: bridge
+    image: net-skoona-development-espressif-image:1.0.0
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.3
     restart: always
     tty: true
     volumes:
@@ -33,4 +18,14 @@ services:
 volumes:
   cDevelopment:
     external: true
-    
+   
+networks:
+  vlan20:
+    name: iot-dev-network
+    driver: macvlan
+    driver_opts:
+      parent: ens18.20
+    ipam:
+      config:
+        - subnet: "10.100.20.0/24"
+          gateway: "10.100.20.1"

@@ -3,22 +3,11 @@ services:
   gtk4dev:
     container_name: Gtk4-Development
     environment:
-      - RACK_ENV=production
       - DISPLAY=10.100.1.5:0.1
-    image: net.skoona.gtk4dev-image:4.0.1
-    ports:
-      - target: 22
-        published: 435
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 7900
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8085
-        protocol: tcp
-        mode: bridge
+    image: net-skoona-development-gtk4dev-image:1.0.0
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.6
     restart: always
     tty: true
     volumes:
@@ -29,4 +18,14 @@ services:
 volumes:
   cDevelopment:
     external: true
-    
+   
+networks:
+  vlan20:
+    name: iot-dev-network
+    driver: macvlan
+    driver_opts:
+      parent: ens18.20
+    ipam:
+      config:
+        - subnet: "10.100.20.0/24"
+          gateway: "10.100.20.1"

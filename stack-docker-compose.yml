@@ -6,19 +6,9 @@ services:
     environment:
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-cpp-image:LATEST
-    ports:
-      - target: 22
-        published: 435
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5910
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8010
-        protocol: tcp
-        mode: bridge
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.7
     restart: always
     tty: true
     volumes:
@@ -31,19 +21,9 @@ services:
     environment:
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-gtk-image:LATEST
-    ports:
-      - target: 22
-        published: 445
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5920
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8020
-        protocol: tcp
-        mode: bridge
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.6
     restart: always
     tty: true
     volumes:
@@ -56,23 +36,9 @@ services:
     environment:
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-golang-image:LATEST
-    ports:
-      - target: 22
-        published: 455
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5930
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8030
-        protocol: tcp
-        mode: bridge
-      - target: 3000
-        published: 3030
-        protocol: tcp
-        mode: bridge
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.5
     restart: always
     tty: true
     volumes:
@@ -86,23 +52,9 @@ services:
       - RACK_ENV=development
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-ruby-image:LATEST
-    ports:
-      - target: 22
-        published: 465
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5940
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8040
-        protocol: tcp
-        mode: bridge
-      - target: 3000
-        published: 3040
-        protocol: tcp
-        mode: bridge
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.4
     restart: always
     tty: true
     volumes:
@@ -115,23 +67,9 @@ services:
     environment:
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-espressif-image:LATEST
-    ports:
-      - target: 22
-        published: 475
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5950
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8050
-        protocol: tcp
-        mode: bridge
-      - target: 3000
-        published: 3050
-        protocol: tcp
-        mode: bridge
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.3
     restart: always
     tty: true
     volumes:
@@ -144,19 +82,9 @@ services:
     environment:
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-arduino-image:LATEST
-    ports:
-      - target: 22
-        published: 485
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 9900
-        protocol: tcp
-        mode: bridge
-      - target: 80
-        published: 8085
-        protocol: tcp
-        mode: bridge
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.2
     restart: always
     tty: true
     volumes:
@@ -167,4 +95,14 @@ services:
 volumes:
   cDevelopment:
     external: true
-    
+
+networks:
+  vlan20:
+    name: iot-dev-network
+    driver: macvlan
+    driver_opts:
+      parent: ens18.20
+    ipam:
+      config:
+        - subnet: "10.100.20.0/24"
+          gateway: "10.100.20.1"
