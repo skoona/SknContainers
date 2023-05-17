@@ -1,10 +1,10 @@
 version: '3.9'
 services:
-  gnome:
-    container_name: Gnome-Explorer
+  elementary-gnome:
+    container_name: Elementary-Gnome-Desktop
     environment:
       - DISPLAY=10.100.1.5:0.1
-    image: net-skoona-gnome-image:1.0.2
+    image: net-skoona-development-elementary-image:LATEST
     networks:
       vlan20:
         ipv4_address: 10.100.20.9
@@ -15,11 +15,11 @@ services:
         source: cDevelopment
         target: /Projects
 
-  desktop:
-    container_name: Gnome-Desktop
+  ubuntu-gnome:
+    container_name: Ubuntu-Gnome-Desktop
     environment:
       - DISPLAY=10.100.1.5:0.1
-    image: net-skoona-development-desktop-image:1.0.2
+    image: net-skoona-development-ubuntu-image:LATEST
     networks:
       vlan20:
         ipv4_address: 10.100.20.8
