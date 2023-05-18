@@ -6,7 +6,7 @@ ARG SC_DEVELOPER='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUa
 ARG SC_TAG=5.0.1
 
 LABEL net.skoona.esp="Espressif Development Container"
-LABEL version="${SC_TAG}""
+LABEL version="${SC_TAG}"
 LABEL target-editor="vsCode"
 LABEL description="Espressif Development Image based on Elementary/OS and full loaded for C development."
 LABEL net.skoona.image.authors="James Scott (skoona@gmail.com)"
@@ -24,10 +24,6 @@ RUN apt-get update -y && \
 	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop-minimal
-
-RUN rm /run/reboot-required*
 
 RUN groupadd -g 1000 jscott && \
 	useradd -c "James Scott III" -u 1000 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_JSCOTT} -m -s /bin/bash jscott && \

@@ -7,7 +7,7 @@ services:
     image: net-skoona-development-elementary-image:LATEST
     networks:
       vlan20:
-        ipv4_address: 10.100.20.9
+        ipv4_address: 10.100.20.12
     restart: always
     tty: true
     volumes:
@@ -22,7 +22,7 @@ services:
     image: net-skoona-development-ubuntu-image:LATEST
     networks:
       vlan20:
-        ipv4_address: 10.100.20.8
+        ipv4_address: 10.100.20.11
     restart: always
     tty: true
     volumes:
