@@ -4,7 +4,7 @@ services:
     container_name: Elementary-Gnome-Desktop
     environment:
       - DISPLAY=10.100.1.5:0.1
-    image: net-skoona-development-elementary-image:1.0.4
+    image: net-skoona-development-elementary-image:5.1.0
     networks:
       vlan20:
         ipv4_address: 10.100.20.9
@@ -19,7 +19,7 @@ services:
     container_name: Ubuntu-Gnome-Desktop
     environment:
       - DISPLAY=10.100.1.5:0.1
-    image: net-skoona-development-ubuntu-image:1.0.4
+    image: net-skoona-development-ubuntu-image:5.1.0
     networks:
       vlan20:
         ipv4_address: 10.100.20.8

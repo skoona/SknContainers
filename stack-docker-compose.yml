@@ -38,7 +38,7 @@ services:
     image: net-skoona-development-golang-image:LATEST
     networks:
       vlan20:
-        ipv4_address: 10.100.20.5
+        ipv4_address: 10.100.20.8
     restart: always
     tty: true
     volumes:

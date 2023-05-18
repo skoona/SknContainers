@@ -25,7 +25,7 @@ RUN apt-get update -y && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop-minimal
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-gnome-desktop
 
 RUN rm /run/reboot-required*
 
