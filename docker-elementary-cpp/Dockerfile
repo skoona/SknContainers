@@ -66,5 +66,6 @@ EXPOSE 3389
 
 VOLUME /Projects
 
-ENTRYPOINT service ssh restart ; bash
+ENTRYPOINT service xrdp restart ; service ssh restart ; bash
+
 
