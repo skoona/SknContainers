@@ -25,10 +25,6 @@ RUN apt-get update -y && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop-minimal
-
-RUN rm /run/reboot-required*
-
 RUN groupadd -g 1000 jscott && \
 	useradd -c "James Scott III" -u 1000 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_JSCOTT} -m -s /bin/bash jscott && \
 	useradd -c "James Scott Jr"  -u 1001 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_SKOONA} -m -s /bin/bash skoona  && \
@@ -67,5 +63,5 @@ EXPOSE 3389
 
 VOLUME /Projects
 
-ENTRYPOINT service xrdp restart && service ssh restart && bash
+ENTRYPOINT service ssh restart ; bash
 
