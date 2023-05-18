@@ -5,9 +5,23 @@ services:
     environment:
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-elementary-image:LATEST
-    networks:
-      vlan20:
-        ipv4_address: 10.100.20.9
+    ports:
+      - target: 22
+        published: 470
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8070
+        protocol: tcp
+        mode: bridge
+      - target: 3389
+        published: 4370
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5970
+        protocol: tcp
+        mode: bridge
     restart: always
     tty: true
     volumes:
@@ -20,9 +34,23 @@ services:
     environment:
       - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-ubuntu-image:LATEST
-    networks:
-      vlan20:
-        ipv4_address: 10.100.20.8
+    ports:
+      - target: 22
+        published: 480
+        protocol: tcp
+        mode: bridge
+      - target: 80
+        published: 8080
+        protocol: tcp
+        mode: bridge
+      - target: 3389
+        published: 4380
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5980
+        protocol: tcp
+        mode: bridge
     restart: always
     tty: true
     volumes:
@@ -33,14 +61,3 @@ services:
 volumes:
   cDevelopment:
     external: true
-
-networks:
-  vlan20:
-    name: iot-dev-network
-    driver: macvlan
-    driver_opts:
-      parent: ens18.20
-    ipam:
-      config:
-        - subnet: "10.100.20.0/24"
-          gateway: "10.100.20.1"

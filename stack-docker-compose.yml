@@ -8,15 +8,19 @@ services:
     image: net-skoona-development-cpp-image:LATEST
     ports:
       - target: 22
-        published: 435
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5910
+        published: 410
         protocol: tcp
         mode: bridge
       - target: 80
         published: 8010
+        protocol: tcp
+        mode: bridge
+      - target: 3389
+        published: 4310
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5910
         protocol: tcp
         mode: bridge
     restart: always
@@ -33,15 +37,19 @@ services:
     image: net-skoona-development-gtk-image:LATEST
     ports:
       - target: 22
-        published: 445
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5920
+        published: 420
         protocol: tcp
         mode: bridge
       - target: 80
         published: 8020
+        protocol: tcp
+        mode: bridge
+      - target: 3389
+        published: 4320
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5920
         protocol: tcp
         mode: bridge
     restart: always
@@ -58,19 +66,19 @@ services:
     image: net-skoona-development-golang-image:LATEST
     ports:
       - target: 22
-        published: 455
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5930
+        published: 430
         protocol: tcp
         mode: bridge
       - target: 80
         published: 8030
         protocol: tcp
         mode: bridge
-      - target: 3000
-        published: 3030
+      - target: 3389
+        published: 4330
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5930
         protocol: tcp
         mode: bridge
     restart: always
@@ -88,11 +96,7 @@ services:
     image: net-skoona-development-ruby-image:LATEST
     ports:
       - target: 22
-        published: 465
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5940
+        published: 440
         protocol: tcp
         mode: bridge
       - target: 80
@@ -101,6 +105,14 @@ services:
         mode: bridge
       - target: 3000
         published: 3040
+        protocol: tcp
+        mode: bridge
+      - target: 3389
+        published: 4340
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5940
         protocol: tcp
         mode: bridge
     restart: always
@@ -117,19 +129,19 @@ services:
     image: net-skoona-development-espressif-image:LATEST
     ports:
       - target: 22
-        published: 475
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 5950
+        published: 450
         protocol: tcp
         mode: bridge
       - target: 80
         published: 8050
         protocol: tcp
         mode: bridge
-      - target: 3000
-        published: 3050
+      - target: 3389
+        published: 4350
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5950
         protocol: tcp
         mode: bridge
     restart: always
@@ -146,15 +158,19 @@ services:
     image: net-skoona-development-arduino-image:LATEST
     ports:
       - target: 22
-        published: 485
-        protocol: tcp
-        mode: bridge
-      - target: 5900
-        published: 9900
+        published: 460
         protocol: tcp
         mode: bridge
       - target: 80
-        published: 8085
+        published: 8060
+        protocol: tcp
+        mode: bridge
+      - target: 3389
+        published: 4360
+        protocol: tcp
+        mode: bridge
+      - target: 5900
+        published: 5960
         protocol: tcp
         mode: bridge
     restart: always

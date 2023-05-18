@@ -1,4 +1,9 @@
 authorized_keys
 .export-user-secrets
 .ssh/
-
+docker-elementary-arduino/.bashrc
+docker-elementary-cpp/.bashrc
+docker-elementary-espressif/.bashrc
+docker-elementary-golang/.bashrc
+docker-elementary-gtk/.bashrc
+docker-elementary-ruby/.bashrc

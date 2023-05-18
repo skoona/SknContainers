@@ -23,6 +23,8 @@ WORKDIRS=( docker-elementary-gtk \
     docker-elementary-ruby \
     docker-elementary-arduino )
 
+export SC_TAG=$TAG
+
 # set mkpasswd 
  [[ -s ./.export-user-secrets ]] && {
      source ./.export-user-secrets
@@ -36,10 +38,15 @@ for i in {0..5} ; do
         cp -a ../.ssh . 
         cp ../.bashrc .
     }
-    docker build -q --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER -t ${IMAGES[$i]} .
+
+    docker build -q --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER --build-arg SC_TAG -t ${IMAGES[$i]} .
+    
     popd
 done
 
-sed "s/LATEST/$TAG/g" ./stack-docker-compose.yml > docker-compose.yml
+[[ -s docker-compose-devcons.yml ]] && { 
+    rm -f docker-compose-devcons.yml 
+}
+sed "s/LATEST/$TAG/g" stack-docker-compose.yml > docker-compose-devcons.yml
 
 echo "Done..."

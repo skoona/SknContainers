@@ -18,6 +18,8 @@ IMAGE="$WORKDIR-image:$TAG"
     exit 1
  }
 
+export SC_TAG=$TAG
+
 # set mkpasswd 
  [[ -s ./.export-user-secrets ]] && {
      source ./.export-user-secrets
@@ -30,9 +32,12 @@ pushd "./$WORKDIR"
       cp -a ../.ssh . 
       cp ../.bashrc .
    }
-  docker build --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER -t $IMAGE .
+  docker build --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER --build-arg SC_TAG -t $IMAGE .
 popd
 
-sed "s/LATEST/$TAG/g" ./stack-desktop-docker-compose.yml > docker-compose.yml
+[[ -s docker-compose-desktop.yml ]] && { 
+    rm -f docker-compose-desktop.yml 
+}
+sed "s/LATEST/$TAG/g" stack-desktop-docker-compose.yml > docker-compose-desktop.yml
 
 echo "Done..."
