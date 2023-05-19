@@ -35,7 +35,7 @@ pushd "./$WORKDIR"
    [[ -s .bashrc ]] || {
       cp -a ../.bashrc .
    } 
-  x11docker --build --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER --build-arg SC_TAG -t $IMAGE .
+  x11docker --ipc=SC_JSCOTT --ipc=SC_SKOONA --ipc=SC_DEVELOPER --ipc=SC_TAG --xvfb --build $IMAGE .
 popd
 
 [[ -s docker-compose-desktop.yml ]] && { 

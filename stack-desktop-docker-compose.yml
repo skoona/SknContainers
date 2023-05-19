@@ -2,8 +2,6 @@ version: '3.9'
 services:
   elementary-gnome:
     container_name: Elementary-Gnome-Desktop
-    environment:
-      - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-elementary-image:LATEST
     networks:
       vlan20:
@@ -17,8 +15,6 @@ services:
 
   ubuntu-gnome:
     container_name: Ubuntu-Gnome-Desktop
-    environment:
-      - DISPLAY=10.100.1.5:0.1
     image: net-skoona-development-ubuntu-image:LATEST
     networks:
       vlan20:
