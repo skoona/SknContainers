@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# file: xBuild <directory> <tag>
+# - Build One Development image
+# - <directory>: Dockerfile directory, name will be suffixed with '-image' and tag
+# - <tag>: docker-image:tag
+# note: x11docker --desktop --xorg --gpu=iglx --init=systemd --network=iot-dev-network x11docker/gnome
+
+WORKDIR=${1:-Project}
+TAG=${2:-1.0.0}
+IMAGE="$WORKDIR-image:$TAG"
+ 
+ [[ -d $WORKDIR ]] || {
+    echo ""
+    echo "Syntax: xBuild <dir-with-dockerfile> <optional-image-tag>"
+    echo "=====> xBuild requires the first params"
+    echo ""
+    exit 1
+ }
+
+export SC_TAG=$TAG
+
+# set mkpasswd 
+ [[ -s ./.export-user-secrets ]] && {
+     source ./.export-user-secrets
+ } || { 
+    source ./.user-secrets
+ } 
+
+pushd "./$WORKDIR"
+   [[ -d .ssh ]] || {
+      cp -a ../.ssh . 
+   }   
+
+   [[ -s .bashrc ]] || {
+      cp -a ../.bashrc .
+   } 
+  x11docker --build --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER --build-arg SC_TAG -t $IMAGE .
+popd
+
+[[ -s docker-compose-desktop.yml ]] && { 
+    rm -f docker-compose-desktop.yml 
+}
+sed "s/LATEST/$TAG/g" stack-desktop-docker-compose.yml > docker-compose-desktop.yml
+
+echo "Done..."

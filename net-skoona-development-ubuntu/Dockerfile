@@ -26,7 +26,7 @@ RUN apt-get update -y && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y lubuntu-desktop
 RUN rm /run/reboot-required*
 
 RUN groupadd -g 1000 jscott && \
@@ -59,12 +59,12 @@ RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown developer:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc && \
 	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources 
 
-# RUN sed -i '3 a echo "\
-# export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
-# export XDG_SESSION_TYPE=x11\\n\
-# export XDG_CURRENT_DESKTOP=LXQt\\n\
-# export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
-# " > ~/.xsessionrc' /etc/xrdp/startwm.sh
+RUN sed -i '3 a echo "\
+	export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
+	export XDG_SESSION_TYPE=x11\\n\
+	export XDG_CURRENT_DESKTOP=LXQt\\n\
+	export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
+	" > ~/.xsessionrc' /etc/xrdp/startwm.sh
 
 EXPOSE 3389
 
