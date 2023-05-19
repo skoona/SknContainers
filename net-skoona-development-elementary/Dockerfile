@@ -59,11 +59,11 @@ RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources 
 
 RUN sed -i '3 a echo "\
-export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
-export XDG_SESSION_TYPE=x11\\n\
-export XDG_CURRENT_DESKTOP=LXQt\\n\
-export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
-" > ~/.xsessionrc' /etc/xrdp/startwm.sh
+	export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
+	export XDG_SESSION_TYPE=x11\\n\
+	export XDG_CURRENT_DESKTOP=LXQt\\n\
+	export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
+	" > ~/.xsessionrc' /etc/xrdp/startwm.sh
 
 EXPOSE 3389
 

@@ -55,12 +55,12 @@ RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown -R developer:users /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
 	chown developer:users /home/developer/.bashrc && chmod 644 /home/developer/.bashrc 
 
-RUN sed -i '3 a echo "
-export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
-export XDG_SESSION_TYPE=x11\\n\
-export XDG_CURRENT_DESKTOP=LXQt\\n\
-export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
-" > ~/.xsessionrc' /etc/xrdp/startwm.sh
+RUN sed -i '3 a echo " \
+		export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
+		export XDG_SESSION_TYPE=x11\\n\
+		export XDG_CURRENT_DESKTOP=LXQt\\n\
+		export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
+		" > ~/.xsessionrc' /etc/xrdp/startwm.sh
 
 EXPOSE 3389
 

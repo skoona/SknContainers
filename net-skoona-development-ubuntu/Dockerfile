@@ -11,7 +11,7 @@ LABEL target-editor="vsCode"
 LABEL description="Gnome Desktop xRDP Image based on Ubuntu/OS and full loaded for C development."
 LABEL net.skoona.image.authors="James Scott (skoona@gmail.com)"
 
-WORKDIR .
+WORKDIR /
 
 ENV TZ=America/Fort_Wayne
 ENV LANG=en_US.UTF-8  
