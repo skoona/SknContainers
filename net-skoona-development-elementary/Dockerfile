@@ -47,6 +47,7 @@ RUN groupadd -g 1000 jscott && \
 
 COPY issue.net /etc/issue.net
 COPY .ssh    /home/jscott/.ssh
+COPY .ssh    /home/developer/.ssh
 COPY .bashrc /home/jscott/.bashrc
 COPY .bashrc /home/skoona/.bashrc
 COPY .bashrc /home/developer/.bashrc
