@@ -56,7 +56,7 @@ RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc && \
 	chown -R jscott:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
 	chown jscott:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc && \
-	chown jscott:jscott /home/developer/.Xresources && chmod 644 /home/developer/.Xresources 
+	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources 
 
 RUN sed -i '3 a echo "\
 export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
