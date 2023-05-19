@@ -1,14 +1,14 @@
-FROM elementary/docker:stable
+FROM x11docker/gnome
 
 ARG SC_JSCOTT='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
 ARG SC_SKOONA='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
 ARG SC_DEVELOPER='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
 ARG SC_TAG=5.0.1
 
-LABEL net.skoona.cpp="C++ Development Container"
+LABEL net.skoona.cpp="X11 Docker Gnome Desktop Container"
 LABEL version="${SC_TAG}"
 LABEL target-editor="vsCode"
-LABEL description="C++ Development Image based on Elementary/OS and full loaded for C development."
+LABEL description="X11docker Gnome Image - fully loaded for C development."
 LABEL net.skoona.image.authors="James Scott (skoona@gmail.com)"
 
 WORKDIR .
@@ -21,7 +21,9 @@ ENV LC_ALL=en_US.UTF-8
 RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
 	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
-	net-tools x11vnc xvfb xrdp cmake flex bison gperf libffi-dev libssl-dev && \
+	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev \
+	libglib2.0-dev gnome-builder gtk-doc-tools gnome-shell-extensions \
+	net-tools flex bison gperf libffi-dev libssl-dev && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
@@ -38,9 +40,7 @@ RUN groupadd -g 1000 jscott && \
 	sed -i "/en_US.UTF-8/s/^# //g" /etc/locale.gen && DEBIAN_FRONTEND=noninteractive locale-gen && \
 	echo "X11UseLocalhost no" > /etc/ssh/sshd_config.d/00-x11-enable.conf && \
 	echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config.d/00-x11-enable.conf && \
-	echo "Xcursor.core: 1" > /home/jscott/.Xresources && \
-	sed -ibak "s/new_cursors=true/new_cursors=false/g" /etc/xrdp/xrdp.ini  && \
-    adduser xrdp ssl-cert
+	echo "Xcursor.core: 1" > /home/jscott/.Xresources 
 
 COPY issue.net /etc/issue.net
 COPY .ssh    /home/jscott/.ssh
@@ -51,20 +51,12 @@ COPY .bashrc /home/developer/.bashrc
 
 RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc && \
-	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources && \
-	chown -R developer:users /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
-	chown developer:users /home/developer/.bashrc && chmod 644 /home/developer/.bashrc 
-
-RUN sed -i '3 a echo "
-export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
-export XDG_SESSION_TYPE=x11\\n\
-export XDG_CURRENT_DESKTOP=LXQt\\n\
-export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
-" > ~/.xsessionrc' /etc/xrdp/startwm.sh
+	chown -R developer:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
+	chown developer:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc && \
+	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources 
 
 EXPOSE 3389
 
 VOLUME /Projects
 
-ENTRYPOINT service xrdp restart ; service ssh restart ; bash
-
+ENTRYPOINT service ssh restart ; bash
