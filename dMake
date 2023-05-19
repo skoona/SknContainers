@@ -34,10 +34,13 @@ export SC_TAG=$TAG
 
 for i in {0..5} ; do
     pushd "./${WORKDIRS[$i]}"
-    [[ -d .ssh ]] || {
-        cp -a ../.ssh . 
-        cp ../.bashrc .
-    }
+   [[ -d .ssh ]] || {
+      cp -a ../.ssh . 
+   }   
+
+   [[ -s .bashrc ]] || {
+      cp -a ../.bashrc .
+   } 
 
     docker build -q --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER --build-arg SC_TAG -t ${IMAGES[$i]} .
     

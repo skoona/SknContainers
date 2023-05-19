@@ -35,8 +35,11 @@ export SC_TAG=$TAG
 pushd "./${WORKDIRS[$INDEX]}"
    [[ -d .ssh ]] || {
       cp -a ../.ssh . 
-      cp ../.bashrc .
-   }
+   }   
+
+   [[ -s .bashrc ]] || {
+      cp -a ../.bashrc .
+   } 
   docker build --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER --build-arg SC_TAG -t ${IMAGES[$INDEX]} .
 popd
 

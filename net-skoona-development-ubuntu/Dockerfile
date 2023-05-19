@@ -22,11 +22,11 @@ RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
 	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
 	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev \
-	libglib2.0-dev libgtk-4-dev gnome-builder gtk-4-examples gtk-doc-tools && \
+	libglib2.0-dev libgtk-4-dev gnome-builder gtk-4-examples gtk-doc-tools gnome-shell-extensions && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y lubuntu-desktop
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
 RUN rm /run/reboot-required*
 
 RUN groupadd -g 1000 jscott && \
@@ -55,15 +55,16 @@ COPY .bashrc /home/developer/.bashrc
 
 RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc && \
-	chown -R jscott:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
-	chown jscott:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc 
+	chown -R developer:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
+	chown developer:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc && \
+	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources 
 
-RUN sed -i '3 a echo "\
-export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
-export XDG_SESSION_TYPE=x11\\n\
-export XDG_CURRENT_DESKTOP=LXQt\\n\
-export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
-" > ~/.xsessionrc' /etc/xrdp/startwm.sh
+# RUN sed -i '3 a echo "\
+# export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
+# export XDG_SESSION_TYPE=x11\\n\
+# export XDG_CURRENT_DESKTOP=LXQt\\n\
+# export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
+# " > ~/.xsessionrc' /etc/xrdp/startwm.sh
 
 EXPOSE 3389
 
