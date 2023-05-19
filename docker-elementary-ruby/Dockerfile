@@ -38,6 +38,8 @@ RUN groupadd -g 1000 jscott && \
 	sed -i "/en_US.UTF-8/s/^# //g" /etc/locale.gen && DEBIAN_FRONTEND=noninteractive locale-gen && \
 	echo "X11UseLocalhost no" > /etc/ssh/sshd_config.d/00-x11-enable.conf && \
 	echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config.d/00-x11-enable.conf && \
+	echo "Xcursor.core: 1" > /home/jscott/.Xresources && \
+	sed -ibak "s/new_cursors=true/new_cursors=false/g" /etc/xrdp/xrdp.ini  && \
     adduser xrdp ssl-cert
 
 COPY issue.net /etc/issue.net
@@ -49,8 +51,9 @@ COPY .bashrc /home/developer/.bashrc
 
 RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc && \
-	chown -R jscott:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
-	chown jscott:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc 
+	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources && \
+	chown -R developer:users /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
+	chown developer:users /home/developer/.bashrc && chmod 644 /home/developer/.bashrc 
 
 RUN sed -i '3 a echo "\
 export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
@@ -63,4 +66,4 @@ EXPOSE 3389
 
 VOLUME /Projects
 
-ENTRYPOINT service ssh restart ; bash
+ENTRYPOINT service xrdp restart ; service ssh restart ; bash

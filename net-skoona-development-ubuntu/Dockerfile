@@ -22,12 +22,11 @@ RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
 	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
 	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev \
-	libgtk-4-dev gnome-builder gtk-4-examples gtk-doc-tools && \
+	libglib2.0-dev libgtk-4-dev gnome-builder gtk-4-examples gtk-doc-tools && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y lubuntu-desktop
-
 RUN rm /run/reboot-required*
 
 RUN groupadd -g 1000 jscott && \
@@ -43,6 +42,8 @@ RUN groupadd -g 1000 jscott && \
 	sed -i "/en_US.UTF-8/s/^# //g" /etc/locale.gen && DEBIAN_FRONTEND=noninteractive locale-gen && \
 	echo "X11UseLocalhost no" > /etc/ssh/sshd_config.d/00-x11-enable.conf && \
 	echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config.d/00-x11-enable.conf && \
+	echo "Xcursor.core: 1" > /home/jscott/.Xresources && \
+	sed -ibak "s/new_cursors=true/new_cursors=false/g" /etc/xrdp/xrdp.ini  && \
     adduser xrdp ssl-cert
 
 COPY issue.net /etc/issue.net
