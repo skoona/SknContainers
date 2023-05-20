@@ -1,6 +1,7 @@
 # SknContainers 
-## (branch: desktop-vlans)
+## (branch: main ) using vlans
 Implementation files for Docker development containers: Ruby, GoLang, GTK4, C++, Espressif, and Arduino. Using VLans to provide each container its own ip address on the hosts local interface.
+
 
 ### Intent
 - Create a full featured docker container that can be used for specific development activities, without the concerns of other language environments.
@@ -9,6 +10,8 @@ Implementation files for Docker development containers: Ruby, GoLang, GTK4, C++,
 - As an experiment, two containers have `lubuntu-desktop` enabled.
 
 ### Usage
+There are three branches in this repo.  Each is related to the Docker Networking used.  `main` and `desktop-vlans` use `macvlan` which gives each container its own ip address. `dockert-network` uses the classic docker bridge network, where containers expose prots which are mapped to the host's ip address.
+
 #### Prepare the build directory; copy or place into this directory (cloned root dir).
 - Create a Virtual Lan(VLAN) on your network router, and enable the physical port to access it.
 - - it would be helpful if Docker containers used a second interface on your docker host for this.

@@ -42,6 +42,10 @@ for i in {0..5} ; do
       cp -a ../.bashrc .
    } 
 
+   [[ -s .vimrc ]] || {
+      cp -a ../.vimrc .
+   } 
+
     docker build -q --build-arg SC_JSCOTT --build-arg SC_SKOONA --build-arg SC_DEVELOPER --build-arg SC_TAG -t ${IMAGES[$i]} .
     
     popd

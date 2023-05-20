@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#
+# NOT WORKING: refer to https://github.com/mviereck/x11docker
 # file: xBuild <directory> <tag>
 # - Build One Development image
 # - <directory>: Dockerfile directory, name will be suffixed with '-image' and tag
