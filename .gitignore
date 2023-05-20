@@ -9,4 +9,11 @@ docker-elementary-espressif/.bashrc
 docker-elementary-golang/.bashrc  
 docker-elementary-gtk/.bashrc  
 docker-elementary-ruby/.bashrc 
-x11docker-gnome/.bashrc 
+x11docker-gnome/.bashrc
+docker-elementary-arduino/.vimrc
+docker-elementary-cpp/.vimrc  
+docker-elementary-espressif/.vimrc 
+docker-elementary-golang/.vimrc  
+docker-elementary-gtk/.vimrc  
+docker-elementary-ruby/.vimrc 
+x11docker-gnome/.vimrc
