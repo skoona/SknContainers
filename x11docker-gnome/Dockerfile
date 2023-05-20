@@ -22,8 +22,7 @@ RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
 	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
 	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev \
-	libglib2.0-dev gnome-builder gtk-doc-tools gnome-shell-extensions \
-	net-tools flex bison gperf libffi-dev libssl-dev && \
+	libglib2.0-dev gnome-builder gtk-doc-tools gnome-shell-extensions && \
 	systemctl enable ssh && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
 
@@ -53,7 +52,9 @@ RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown jscott:jscott /home/jscott/.bashrc && chmod 644 /home/jscott/.bashrc && \
 	chown -R developer:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
 	chown developer:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc && \
-	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources 
+	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources && \
+	sed -ibak "s/new_cursors=true/new_cursors=false/g" /etc/xrdp/xrdp.ini  && \
+    adduser xrdp ssl-cert
 
 EXPOSE 3389
 

@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM amd64/ubuntu:22.04
 
 ARG SC_JSCOTT='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
 ARG SC_SKOONA='$y$j9T$bX33CvQOJHRg17OWhTjja.$2Dk/Jhfeu78DyJXpPc2Op58V7bpRbfUazFOHRFSlyq4'
@@ -13,21 +13,31 @@ LABEL net.skoona.image.authors="James Scott (skoona@gmail.com)"
 
 WORKDIR /
 
-ENV TZ=America/Fort_Wayne
-ENV LANG=en_US.UTF-8  
-ENV LANGUAGE=en_US:en  
-ENV LC_ALL=en_US.UTF-8   
-
 RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
 	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
-	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev \
-	libglib2.0-dev libgtk-4-dev gnome-builder gtk-4-examples gtk-doc-tools gnome-shell-extensions && \
-	systemctl enable ssh && \
-	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
+	net-tools  gnome-session gdm3 xvfb xrdp flex bison gperf libffi-dev libssl-dev \
+	libglib2.0-dev libgtk-4-dev gnome-builder gtk-4-examples gtk-doc-tools gnome-shell-extensions
+	
+ENV TZ=America/Fort_Wayne
+ENV LANGUAGE=en_US:en  
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y lubuntu-desktop
+RUN DEBIAN_FRONTEND=noninteractive localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone && \
+	systemctl enable ssh && systemctl set-default graphical.target
+
+ENV LANG=C.UTF-8  
+ENV LC_ALL=en_US.UTF-8   
+
+# RUN rm /run/reboot-required*
+RUN systemctl set-default graphical.target
+
+# RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tasksel
+# RUN DEBIAN_FRONTEND=noninteractive tasksel install ubuntu-desktop
+RUN DEBIAN_FRONTEND=noninteractive apt-get install ubuntu-gnome-desktop -y
 RUN rm /run/reboot-required*
+
+RUN systemctl set-default graphical.target
 
 RUN groupadd -g 1000 jscott && \
 	useradd -c "James Scott III" -u 1000 -g 1000 -G adm,lp,audio,video,dip,plugdev,sudo,users -p ${SC_JSCOTT} -m -s /bin/bash jscott && \
@@ -38,8 +48,7 @@ RUN groupadd -g 1000 jscott && \
 	echo "skoona ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/skoona && \
 	echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
 	chmod -R 0440 /etc/sudoers.d/* && \
-	mkdir /Projects && chown -R jscott:users /Projects && \ 
-	sed -i "/en_US.UTF-8/s/^# //g" /etc/locale.gen && DEBIAN_FRONTEND=noninteractive locale-gen && \
+	mkdir /Projects && chown -R jscott:users /Projects && \ 	
 	echo "X11UseLocalhost no" > /etc/ssh/sshd_config.d/00-x11-enable.conf && \
 	echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config.d/00-x11-enable.conf && \
 	echo "Xcursor.core: 1" > /home/jscott/.Xresources && \
@@ -58,13 +67,6 @@ RUN chown -R jscott:jscott /home/jscott/.ssh && chmod 700 /home/jscott/.ssh && \
 	chown -R developer:jscott /home/developer/.ssh && chmod 700 /home/developer/.ssh && \
 	chown developer:jscott /home/developer/.bashrc && chmod 644 /home/developer/.bashrc && \
 	chown jscott:jscott /home/jscott/.Xresources && chmod 644 /home/jscott/.Xresources 
-
-RUN sed -i '3 a echo "\
-	export GNOME_SHELL_SESSION_MODE=lubuntu\\n\
-	export XDG_SESSION_TYPE=x11\\n\
-	export XDG_CURRENT_DESKTOP=LXQt\\n\
-	export XDG_CONFIG_DIRS=/etc/xdg/xdg-Lubuntu:/etc/xdg\\n\
-	" > ~/.xsessionrc' /etc/xrdp/startwm.sh
 
 EXPOSE 3389
 
