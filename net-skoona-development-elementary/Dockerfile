@@ -11,21 +11,24 @@ LABEL target-editor="vsCode"
 LABEL description="Gnome Explorer xRDP Image based on Elementary/OS and full loaded for C development."
 LABEL net.skoona.image.authors="James Scott (skoona@gmail.com)"
 
-WORKDIR .
-
-ENV TZ=America/Fort_Wayne
-ENV LANG=en_US.UTF-8  
-ENV LANGUAGE=en_US:en  
-ENV LC_ALL=en_US.UTF-8   
-
 RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
 	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
-	net-tools x11vnc xvfb xrdp flex bison gperf libffi-dev libssl-dev && \
-	systemctl enable ssh && \
-	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone
+	net-tools xvfb xrdp cmake flex bison gperf libffi-dev libssl-dev && \
+	systemctl enable ssh 
+
+ENV TZ=America/Indiana/Indianapolis
+ENV LANGUAGE=en_US:en  
+
+RUN DEBIAN_FRONTEND=noninteractive localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  && echo $TZ > /etc/timezone && \
+	systemctl enable ssh && systemctl set-default graphical.target
+
+ENV LANG=en_US.UTF-8  
+ENV LC_ALL=en_US.UTF-8   
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y lubuntu-desktop
+
 RUN rm /run/reboot-required*
 
 RUN groupadd -g 1000 jscott && \
