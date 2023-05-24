@@ -3,7 +3,7 @@ services:
   ubuntu-gnome:
     hostname: uDesk.local.skoona.net
     image: net-skoona-development-webtop-ubuntu-image:vl-1.2
-    container_name: WebTop-Gnome-wDesktop
+    container_name: WebTop-Gnome-uDesktop
     privileged: true
     security_opt:
       - seccomp:unconfined

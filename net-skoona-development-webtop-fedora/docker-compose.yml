@@ -3,7 +3,7 @@ services:
   fedora-gnome:
     hostname: fDesk.local.skoona.net
     image: net-skoona-development-webtop-fedora-image:vl-1.2
-    container_name: WebTop-Gnome-wDesktop
+    container_name: WebTop-Gnome-fDesktop
     privileged: true
     security_opt:
       - seccomp:unconfined

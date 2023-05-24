@@ -12,6 +12,7 @@ services:
       - PGID=1000 
       - TZ=America/Indiana/Indianapolis
       - SUBFOLDER=/ 
+      - START_DOCKER=false
       - TITLE=Skoona fDesktops
     networks:
       vlan20:
@@ -40,6 +41,7 @@ services:
       - PGID=1000 
       - TZ=America/Indiana/Indianapolis
       - SUBFOLDER=/ 
+      - START_DOCKER=false
       - TITLE=Skoona uDesktop
     networks:
       vlan20:
