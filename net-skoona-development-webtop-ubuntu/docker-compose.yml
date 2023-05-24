@@ -1,37 +1,9 @@
 version: '3.9'
 services:
-  fedora-gnome:
-    hostname: fDesk.local.skoona.net
-    image: net-skoona-development-webtop-fedora-image:wt-2.0
-    container_name: WebTop-Gnome-fDesktop
-    privileged: true
-    security_opt:
-      - seccomp:unconfined
-    environment:
-      - PUID=1000 
-      - PGID=1000 
-      - TZ=America/Indiana/Indianapolis
-      - SUBFOLDER=/ 
-      - TITLE=Skoona fDesktop
-    networks:
-      vlan20:
-        ipv4_address: 10.100.20.12
-    volumes:
-    - type: volume
-      source: cDevelopment
-      target: /Projects
-    - type: volume
-      source: webtop-homes
-      target: /home
-    - type: volume
-      source: webtop-home-fedora
-      target: /config
-    restart: unless-stopped
-  
   ubuntu-gnome:
     hostname: uDesk.local.skoona.net
-    image: net-skoona-development-webtop-ubuntu-image:wt-2.0
-    container_name: WebTop-Gnome-uDesktop
+    image: net-skoona-development-webtop-ubuntu-image:vl-1.2
+    container_name: WebTop-Gnome-wDesktop
     privileged: true
     security_opt:
       - seccomp:unconfined
@@ -62,8 +34,6 @@ volumes:
   webtop-homes:
     external: true
   webtop-home-ubuntu:
-    external: true
-  webtop-home-fedora:
     external: true
 
 networks:
