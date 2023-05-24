@@ -19,7 +19,7 @@ RUN apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils tzdata dbus vim curl wget lv htop \
 	openssh-server man-db sudo tree git sed locales x11-apps gedit whois \
 	libglib2.0-dev libgtk-4-dev gnome-builder gtk-4-examples gtk-doc-tools \
-	net-tools cmake flex bison gperf libffi-dev libssl-dev autotools-dev automake autoconf libtools && \
+	net-tools cmake flex bison gperf libffi-dev libssl-dev autotools-dev automake autoconf libtool && \
 	systemctl enable ssh && echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config.d/00-x11-enable.conf 
 
 EXPOSE 3000

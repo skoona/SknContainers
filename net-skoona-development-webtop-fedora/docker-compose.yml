@@ -11,6 +11,7 @@ services:
       - PUID=1000 
       - PGID=1000 
       - TZ=America/Indiana/Indianapolis
+      - START_DOCKER=false
       - SUBFOLDER=/ 
       - TITLE=Skoona fDesktop
     networks:
