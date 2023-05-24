@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+  fedora-gnome:
+    hostname: wExplorer.local.skoona.net
+    image: net-skoona-development-webtop-explorer-image:wt-1.2
+    container_name: Explorer-WebTop-Gnome-Desktop
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000 
+      - PGID=1000 
+      - TZ=America/Indiana/Indianapolis
+      - START_DOCKER=false
+      - SUBFOLDER=/ 
+      - TITLE=Skoona Explorer
+    networks:
+      vlan20:
+        ipv4_address: 10.100.20.13
+    volumes:
+      - type: volume
+        source: cDevelopment
+        target: /Projects
+      - type: volume
+        source: webtop-homes
+        target: /home
+      - type: volume
+        source: webtop-home-fedora
+        target: /config
+    restart: unless-stopped
+    
+volumes:
+  cDevelopment:
+    external: true
+  webtop-homes:
+    external: true
+  webtop-home-fedora:
+    external: true
+
+networks:
+  vlan20:
+    name: iot-dev-network
+    driver: macvlan
+    driver_opts:
+      parent: ens18.20
+    ipam:
+      config:
+        - subnet: "10.100.20.0/24"
+          gateway: "10.100.20.1"
